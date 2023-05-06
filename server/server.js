@@ -1,7 +1,7 @@
 // Import required modules
 const express = require('express');
 const cors = require('cors');
-const passport = require('passport');
+const passport = require('./config/passport-setup');
 const session = require('express-session');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
@@ -23,9 +23,6 @@ app.use(express.json());
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Passport config
-require('./config/passport-setup');
 
 // Use the routes
 app.use('/api/users', userRoutes);

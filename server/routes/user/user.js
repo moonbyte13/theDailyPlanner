@@ -17,4 +17,19 @@ router.get('/me', async (req, res) => {
   }
 });
 
+// Update the current user's email address
+router.put('/me/email', async (req, res) => {
+  try {
+    if (req.user) {
+      const user = await User.findByIdAndUpdate(req.user._id, { email: req.body.email }, { new: true });
+      res.json(user);
+    } else {
+      res.sendStatus(401);
+    }
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = router;

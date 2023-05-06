@@ -2,31 +2,24 @@ const express = require('express');
 const router = express.Router();
 const { Widget } = require('../../models');
 
-// Create a new widget
-router.post('/', async (req, res) => {
+// Get all widgets
+router.get('/', async (req, res) => {
   try {
-    const { type, title, content, position } = req.body;
-    const widget = new Widget({
-      user: req.user._id,
-      type,
-      title,
-      content,
-      position,
-    });
-    await widget.save();
-    res.json(widget);
+    const widgets = await Widget.find({}).populate('owner', 'displayName');
+    res.json(widgets);
   } catch (err) {
     console.error(err);
     res.sendStatus(500);
   }
 });
 
-// Get all widgets for the current user
-router.get('/', async (req, res) => {
+// Create a new widget
+router.post('/', async (req, res) => {
   try {
     if (req.user) {
-      const widgets = await Widget.find({ user: req.user._id });
-      res.json(widgets);
+      const widget = new Widget({ ...req.body, owner: req.user._id });
+      await widget.save();
+      res.json(widget);
     } else {
       res.sendStatus(401);
     }
@@ -36,22 +29,14 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Update a widget
-router.patch('/:id', async (req, res) => {
+// Update a widget by ID
+router.put('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { type, title, content, position } = req.body;
-    const widget = await Widget.findById(id);
-    if (widget) {
-      widget.type = type;
-      widget.title = title;
-      widget.content = content;
-      widget.position = position;
-      widget.updatedAt = Date.now();
-      await widget.save();
+    if (req.user) {
+      const widget = await Widget.findByIdAndUpdate(req.params.id, req.body, { new: true });
       res.json(widget);
     } else {
-      res.sendStatus(404);
+      res.sendStatus(401);
     }
   } catch (err) {
     console.error(err);
@@ -59,16 +44,14 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-// Delete a widget
+// Delete a widget by ID
 router.delete('/:id', async (req, res) => {
   try {
-    const { id } = req.params;
-    const widget = await Widget.findById(id);
-    if (widget) {
-      await widget.remove();
-      res.sendStatus(204);
+    if (req.user) {
+      await Widget.findByIdAndDelete(req.params.id);
+      res.sendStatus(200);
     } else {
-      res.sendStatus(404);
+      res.sendStatus(401);
     }
   } catch (err) {
     console.error(err);
