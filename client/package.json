@@ -9,7 +9,8 @@
     "axios": "^0.26.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.2.2",
+    "react-grid-layout": "^1.3.4",
+    "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
     "unocss": "^0.51.12",
     "web-vitals": "^2.1.4"
