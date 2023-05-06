@@ -5,6 +5,8 @@ const passport = require('passport');
 const session = require('express-session');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
+const { userRoutes, widgetRoutes } = require('./routes');
+const logger = require('./utils/logger');
 
 // Load environment variables from the .env file
 dotenv.config();
@@ -25,12 +27,9 @@ app.use(passport.session());
 // Passport config
 require('./config/passport-setup');
 
-// Import and use the routes
-const widgetRoutes = require('./routes/widgets');
-app.use('/api/widgets', widgetRoutes);
-
-const userRoutes = require('./routes/users');
+// Use the routes
 app.use('/api/users', userRoutes);
+app.use('/api/widgets', widgetRoutes);
 
 // Google OAuth2 routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -50,5 +49,5 @@ app.get('/logout', (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  logger.info(`Server is running on port ${PORT}\u{1F680}`);
 });
