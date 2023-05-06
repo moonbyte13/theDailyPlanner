@@ -25,8 +25,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Use the routes
-app.use('/api/users', userRoutes);
-app.use('/api/widgets', widgetRoutes);
+app.use('/api/user.js', userRoutes);
+app.use('/api/widgets.js', widgetRoutes);
 
 // Google OAuth2 routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

@@ -1,3 +1,4 @@
+const path = require('path');
 const winston = require('winston');
 
 // Define a custom logger with different log levels
@@ -12,8 +13,8 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' }),
+    new winston.transports.File({ filename: path.join('logs', 'error.log'), level: 'error' }),
+    new winston.transports.File({ filename: path.join('logs', 'combined.log') }),
   ],
 });
 
