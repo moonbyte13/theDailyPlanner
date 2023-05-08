@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { GoogleLogin } from 'react-google-login';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -10,6 +11,22 @@ function LoginPage() {
     e.preventDefault();
     // your login logic here
     history.push('/dashboard');
+  };
+
+  const handleGoogleLoginSuccess = (response) => {
+    console.log('Google Login successful:', response);
+    console.log('history:', history);
+    // handle the response from the Google API here
+    // for example, you can use the Google API access token to access the user's calendar
+  
+    // Redirect to the Dashboard component
+    history.push('/dashboard');
+  };
+  
+
+  const handleGoogleLoginFailure = (response) => {
+    console.log(response);
+    // handle the login failure here
   };
 
   return (
@@ -48,6 +65,13 @@ function LoginPage() {
             Login
           </button>
         </div>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Login with Google"
+          onSuccess={handleGoogleLoginSuccess}
+          onFailure={handleGoogleLoginFailure}
+          cookiePolicy={'single_host_origin'}
+        />
       </form>
     </div>
   );
