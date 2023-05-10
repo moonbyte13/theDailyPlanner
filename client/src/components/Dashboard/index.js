@@ -1,11 +1,12 @@
-import React from 'react';
 import { WidthProvider, Responsive } from 'react-grid-layout';
+import { Resizable } from 'react-resizable';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import './style.css';
 import CalendarWidget from '../CalendarWidget';
 import SelfReflectionWidget from '../SelfReflectionWidget';
 import JournalWidget from '../JournalWidget';
+
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -28,14 +29,20 @@ const Dashboard = () => {
         draggableHandle=".widget-handle"
         resizeHandle=".widget-resize-handle"
       >
-        <div key="calendar" className="widget">
-          <CalendarWidget />
+        <div key="calendar">
+          <Resizable width={4 * 30} height={6 * 30}>
+            <CalendarWidget />
+          </Resizable>
         </div>
-        <div key="selfReflection" className="widget">
-          <SelfReflectionWidget />
+        <div key="selfReflection">
+          <Resizable width={4 * 30} height={6 * 30}>
+            <SelfReflectionWidget />
+          </Resizable>
         </div>
-        <div key="journal" className="widget">
-          <JournalWidget />
+        <div key="journal">
+          <Resizable width={4 * 30} height={6 * 30}>
+            <JournalWidget />
+          </Resizable>
         </div>
       </ResponsiveGridLayout>
     </div>
