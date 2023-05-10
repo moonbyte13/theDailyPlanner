@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import Dashboard from './components/Dashboard/'; // Make sure to create a Dashboard component
+import Dashboard from './components/Dashboard'; // Make sure to create a Dashboard component
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import LoginPage from './components/LoginPage/'; // Make sure to create a LoginPage component
+import LoginPage from './components/LoginPage'; // Make sure to create a LoginPage component
 
 function App() {
   return (
