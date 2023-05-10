@@ -4,6 +4,7 @@ import './style.css';
 import CalendarWidget from '../CalendarWidget';
 import SelfReflectionWidget from '../SelfReflectionWidget';
 import JournalWidget from '../JournalWidget';
+import User from '../User';
 import { useState, useEffect } from 'react';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -32,16 +33,16 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <header 
-        style={{ 
-          backgroundImage: "url('https://media0.giphy.com/media/l378b9LcC3cclsY2A/giphy.gif?cid=ecf05e477w21yo93n940hsi8o15chbg31ylk68u5ccmpjwhr&ep=v1_gifs_search&rid=giphy.gif&ct=g')",
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: '100%',
-          height: '15vw'
-        }}
+        className='flex flex-row h-15vw bg-cover bg-center' 
+        style={{ backgroundImage: "url('https://media0.giphy.com/media/l378b9LcC3cclsY2A/giphy.gif?cid=ecf05e477w21yo93n940hsi8o15chbg31ylk68u5ccmpjwhr&ep=v1_gifs_search&rid=giphy.gif&ct=g')" }}
       >
-        <h1>Dashboard</h1>
-        <p>{currentTime.toLocaleTimeString()}</p>
+        <div className="user-info">
+          <User />
+        </div>
+        <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+        <p className="text-white">{currentTime.toLocaleTimeString()}</p>
       </header>
+
       <ResponsiveGridLayout
         className="layout"
         layouts={{ lg: layout }}

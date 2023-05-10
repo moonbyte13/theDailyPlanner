@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 function LoginPage() {
   const history = useHistory();
@@ -8,8 +9,22 @@ function LoginPage() {
 
   const handleCredentialResponse = useCallback((response) => {
     console.log('Google Login successful. ID token:', response.credential);
+    
+    // Get the user's information from the JWT token
+    const decodedToken = jwtDecode(response.credential);
+    const user = {
+      name: decodedToken.name,
+      email: decodedToken.email,
+      picture: decodedToken.picture,
+    };
+    
+    console.log('User information:', user);
+    localStorage.setItem('user', JSON.stringify(user));
+    
     history.push('/dashboard');
+    window.location.reload();
   }, [history]);
+  
 
   useEffect(() => {
     let checkGapiInterval;
